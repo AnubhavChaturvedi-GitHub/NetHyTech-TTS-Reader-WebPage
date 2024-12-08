@@ -6,7 +6,7 @@ A modern, clean, and user-friendly **Text-to-Speech (TTS)** reader web applicati
 
 You can access the live version of the TTS Reader at:
 
-[**TTS Reader - NetHyTech**](https://nethytech-tts.netlify.app/)
+[**TTS Reader - NetHyTech**]( https://nethytechtts-reader.netlify.app/)
 
 ## 🛠️ **Features**
 
