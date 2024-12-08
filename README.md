@@ -2,6 +2,8 @@
 
 A modern, clean, and user-friendly **Text-to-Speech (TTS)** reader web application. This tool allows users to convert text into speech using multiple voice options. It's powered by StreamElements API, and it offers a sleek, interactive design with a combination of **dark** and **light** color themes for a modern look.
 
+![image](https://github.com/user-attachments/assets/5b1bc2ae-672b-413b-ac15-3c7e3821c53e)
+
 ## 🔗 **Live Demo**
 
 You can access the live version of the TTS Reader at:
