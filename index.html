@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetHyTech TTS Reader</title>
+    <style>
+        /* Body and Background Styling */
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #000000, #3b3b3b);
+            color: #fff;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #222;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h3 {
+            color: #ffcc00;
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            color: #333;
+            background-color: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            resize: none;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            margin: 10px 0;
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        select:hover, button:hover {
+            background-color: #2980b9;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            outline: none;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+
+        .credits a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        .credits a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h3 {
+                font-size: 22px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>NetHyTech TTS Reader</h3>
+        <textarea id="text" rows="6" placeholder="Enter your text here (Max 500 characters)"></textarea>
+        <select id="voice">
+            <option value="Brian">Brian (Male, British)</option>
+            <option value="Emma">Emma (Female, British)</option>
+            <option value="Amy">Amy (Female, British)</option>
+            <option value="Matthew">Matthew (Male, US)</option>
+            <option value="Joanna">Joanna (Female, US)</option>
+            <option value="Ivy">Ivy (Female, Child)</option>
+        </select>
+        <button id="button">Play</button>
+        <audio id="audio" controls>
+            <source id="source" type="audio/wav" />
+        </audio>
+
+        <div class="credits">
+            <p>
+                Created by <b>NetHyTech</b><br />
+                Powered by <b>Anubhav Chaturvedi</b><br />
+                Find the source code on <a href="https://github.com/AnubhavChaturvedi-Github" target="_blank">GitHub</a>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function submit() {
+            const text = document.getElementById('text').value.trim();
+            const voice = document.getElementById('voice').value;
+
+            if (!text) {
+                alert('Please enter some text.');
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=` +
+                    encodeURIComponent(text)
+                );
+
+                if (response.status !== 200) {
+                    alert('Error generating audio. Please try again.');
+                    return;
+                }
+
+                const mp3Blob = await response.blob();
+                const blobUrl = URL.createObjectURL(mp3Blob);
+
+                const audioSource = document.getElementById('source');
+                audioSource.setAttribute('src', blobUrl);
+
+                const audioPlayer = document.getElementById('audio');
+                audioPlayer.pause();
+                audioPlayer.load();
+                audioPlayer.play();
+            } catch (error) {
+                alert(`An error occurred: ${error.message}`);
+            }
+        }
+
+        document.getElementById('button').onclick = submit;
+    </script>
+</body>
+</html>
